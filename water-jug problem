@@ -1,0 +1,103 @@
+from collections import deque
+def water_jug_problem(capacity1, capacity2, target):
+    # Create a queue for BFS
+    queue = deque()
+    visited = set()
+    # Initial state (0, 0) - both jugs are empty
+    queue.append((0, 0))
+    visited.add((0, 0))
+    while queue:
+        jug1, jug2 = queue.popleft()
+        if jug1 == target or jug2 == target or jug1 + jug2 == target:
+            return True
+        possible_states = [
+            (capacity1, jug2),   
+            (jug1, capacity2),  
+            (0, jug2),          
+            (jug1, 0),           
+            (jug1 - min(jug1, capacity2 - jug2), jug2 + min(jug1, capacity2 - jug2)),  
+            (jug1 + min(jug2, capacity1 - jug1), jug2 - min(jug2, capacity1 - jug1))  
+        ]
+        for state in possible_states:
+            if state not in visited:
+                visited.add(state)
+                queue.append(state)
+    return False
+if __name__ == "__main__":
+    jug1_capacity = 4  
+    jug2_capacity = 3  
+    target_amount = 2
+    if water_jug_problem(jug1_capacity, jug2_capacity, target_amount):
+        print(f"It is possible to measure {target_amount} liters using jugs of capacity {jug1_capacity} and {jug2_capacity}.")
+    else:
+        print(f"It is not possible to measure {target_amount} liters using jugs of capacity {jug1_capacity} and {jug2_capacity}.")
+
+output 
+from collections import deque
+def water_jug_problem(capacity1, capacity2, target):
+    # Create a queue for BFS
+    queue = deque()
+    visited = set()
+    # Initial state (0, 0) - both jugs are empty
+    queue.append((0, 0))
+    visited.add((0, 0))
+    while queue:
+        jug1, jug2 = queue.popleft()
+        if jug1 == target or jug2 == target or jug1 + jug2 == target:
+            return True
+        possible_states = [
+            (capacity1, jug2),   
+            (jug1, capacity2),  
+            (0, jug2),          
+            (jug1, 0),           
+            (jug1 - min(jug1, capacity2 - jug2), jug2 + min(jug1, capacity2 - jug2)),  
+            (jug1 + min(jug2, capacity1 - jug1), jug2 - min(jug2, capacity1 - jug1))  
+        ]
+        for state in possible_states:
+            if state not in visited:
+                visited.add(state)
+                queue.append(state)
+    return False
+if __name__ == "__main__":
+    jug1_capacity = 4  
+    jug2_capacity = 3  
+    target_amount = 2
+    if water_jug_problem(jug1_capacity, jug2_capacity, target_amount):
+        print(f"It is possible to measure {target_amount} liters using jugs of capacity {jug1_capacity} and {jug2_capacity}.")
+    else:
+        print(f"It is not possible to measure {target_amount} liters using jugs of capacity {jug1_capacity} and {jug2_capacity}.")
+output  from collections import deque
+def water_jug_problem(capacity1, capacity2, target):
+    # Create a queue for BFS
+    queue = deque()
+    visited = set()
+    # Initial state (0, 0) - both jugs are empty
+    queue.append((0, 0))
+    visited.add((0, 0))
+    while queue:
+        jug1, jug2 = queue.popleft()
+        if jug1 == target or jug2 == target or jug1 + jug2 == target:
+            return True
+        possible_states = [
+            (capacity1, jug2),   
+            (jug1, capacity2),  
+            (0, jug2),          
+            (jug1, 0),           
+            (jug1 - min(jug1, capacity2 - jug2), jug2 + min(jug1, capacity2 - jug2)),  
+            (jug1 + min(jug2, capacity1 - jug1), jug2 - min(jug2, capacity1 - jug1))  
+        ]
+        for state in possible_states:
+            if state not in visited:
+                visited.add(state)
+                queue.append(state)
+    return False
+if __name__ == "__main__":
+    jug1_capacity = 4  
+    jug2_capacity = 3  
+    target_amount = 2
+    if water_jug_problem(jug1_capacity, jug2_capacity, target_amount):
+        print(f"It is possible to measure {target_amount} liters using jugs of capacity {jug1_capacity} and {jug2_capacity}.")
+    else:
+        print(f"It is not possible to measure {target_amount} liters using jugs of capacity {jug1_capacity} and {jug2_capacity}.")
+output: 
+it is possible to measure 2liters using jug of capacity 4 and 3 liters
