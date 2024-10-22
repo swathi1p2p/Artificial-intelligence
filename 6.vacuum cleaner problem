@@ -1,0 +1,43 @@
+class VacuumCleaner:
+    def __init__(self, location, status):
+        self.location = location
+        ('A' or 'B')
+        self.status = status      
+    def clean(self):
+        print(f"Initial Location: {self.location}")
+        print(f"Initial Status: {self.status}")
+        steps = 0
+        while 'dirty' in self.status.values():
+            if self.status[self.location] == 'dirty':
+                print(f"Room {self.location} is dirty. Cleaning now")
+                self.status[self.location] = 'clean'
+                print(f"Room {self.location} is now clean.")
+                steps += 1
+            if 'dirty' in self.status.values():
+                if self.location == 'A':
+                    print("Moving to Room B.")
+                    self.location = 'B'
+                elif self.location == 'B':
+                    print("Moving to Room A...")
+                    self.location = 'A'
+                steps += 1
+        print(f"Final Status: {self.status}")
+        print(f"Total Steps Taken: {steps}")
+if __name__ == "__main__":
+    initial_location = 'A'
+    room_status = {
+        'A': 'dirty',  
+        'B': 'dirty'   
+    }
+    vacuum = VacuumCleaner(initial_location, room_status)
+    vacuum.clean()
+output
+Initial Location: A
+Initial Status: {'A': 'dirty', 'B': 'dirty'}
+Room A is dirty. Cleaning now
+Room A is now clean.
+Moving to Room B.
+Room B is dirty. Cleaning now
+Room B is now clean.
+Final Status: {'A': 'clean', 'B': 'clean'}
+Total Steps Taken: 3
