@@ -1,0 +1,22 @@
+import itertools
+def cryptarithmetic():
+    letters = 'SENDMORY'
+    digits = range(10)
+    for perm in itertools.permutations(digits, len(letters)):
+        mapping = dict(zip(letters, perm))
+        if mapping['S'] == 0 or mapping['M'] == 0:
+            continue
+        send = 1000 * mapping['S'] + 100 * mapping['E'] + 10 * mapping['N'] + mapping['D']
+        more = 1000 * mapping['M'] + 100 * mapping['O'] + 10 * mapping['R'] + mapping['E']
+        money = 10000 * mapping['M'] + 1000 * mapping['O'] + 100 * mapping['N'] + 10 * mapping['E'] + mapping['Y']
+        if send + more == money:
+            print(f"SEND = {send}, MORE = {more}, MONEY = {money}\n")
+            print(f"Solution: {mapping}")
+            return mapping  
+    print("No solution found.")
+if __name__ == "__main__":
+    cryptarithmetic()
+output
+SEND = 9567, MORE = 1085, MONEY = 10652
+
+Solution: {'S': 9, 'E': 5, 'N': 6, 'D': 7, 'M': 1, 'O': 0, 'R': 8, 'Y': 2}
