@@ -1,0 +1,51 @@
+from queue import PriorityQueue
+def a_star(graph, start, goal, h):
+    open_set = PriorityQueue()
+    open_set.put((0, start))  # (priority, node)
+    came_from = {start: None}
+    g_score = {node: float('inf') for node in graph}
+    g_score[start] = 0
+    f_score = {node: float('inf') for node in graph}
+    f_score[start] = h[start]
+    while not open_set.empty():
+        current = open_set.get()[1]
+        if current == goal:
+            return reconstruct_path(came_from, current)
+        for neighbor, cost in graph[current]:
+            tentative_g_score = g_score[current] + cost
+            if tentative_g_score < g_score[neighbor]:
+                came_from[neighbor] = current
+                g_score[neighbor] = tentative_g_score
+                f_score[neighbor] = g_score[neighbor] + h[neighbor]
+                open_set.put((f_score[neighbor], neighbor))
+    return None  
+def reconstruct_path(came_from, current):
+    path = []
+    while current is not None:
+        path.append(current)
+        current = came_from[current]
+    path.reverse()
+    return path
+if __name__ == "__main__":
+    graph = {
+        'A': [('B', 1), ('C', 4)],
+        'B': [('A', 1), ('C', 2), ('D', 5)],
+        'C': [('A', 4), ('B', 2), ('D', 1)],
+        'D': [('B', 5), ('C', 1)]
+    }
+    h = {
+        'A': 7,
+        'B': 6,
+        'C': 2,
+        'D': 0
+    }
+    start_node = 'A'
+    goal_node = 'D'
+    path = a_star(graph, start_node, goal_node, h)
+    if path:
+        print(f"Path is: {path}")
+    else:
+        print("No path found.")
+
+output
+Path is: ['A', 'C', 'D']
