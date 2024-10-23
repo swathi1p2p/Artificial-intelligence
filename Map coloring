@@ -1,0 +1,58 @@
+class MapColoringCSP:
+    def __init__(self, variables, domains, neighbors, constraints):
+        self.variables = variables
+        self.domains = domains      
+        self.neighbors = neighbors
+        self.constraints = constraints  
+    def backtrack(self, assignment):
+        if len(assignment) == len(self.variables):
+            return assignment
+        unassigned_vars = [v for v in self.variables if v not in assignment]
+        var = unassigned_vars[0]
+        for value in self.domains[var]:
+            if self.is_consistent(var, value, assignment):
+                assignment[var] = value
+                result = self.backtrack(assignment)
+                if result:
+                    return result
+                del assignment[var]
+        return None
+    def is_consistent(self, var, value, assignment):
+        for neighbor in self.neighbors[var]:
+            if neighbor in assignment and not self.constraints(var, value, neighbor, assignment[neighbor]):
+                return False
+        return True
+def map_coloring_constraint(var, value, neighbor, neighbor_value):
+    return value != neighbor_value
+if __name__ == "__main__":
+    regions = ['Western Australia', 'Northern Territory', 'South Australia', 'Queensland', 'New South Wales', 'Victoria', 'Tasmania']
+    colors = ['Red', 'Green', 'Blue']
+    domains = {region: colors[:] for region in regions}
+    neighbors = {
+        'Western Australia': ['Northern Territory', 'South Australia'],
+        'Northern Territory': ['Western Australia', 'South Australia', 'Queensland'],
+        'South Australia': ['Western Australia', 'Northern Territory', 'Queensland', 'New South Wales', 'Victoria'],
+        'Queensland': ['Northern Territory', 'South Australia', 'New South Wales'],
+        'New South Wales': ['Queensland', 'South Australia', 'Victoria'],
+        'Victoria': ['South Australia', 'New South Wales'],
+        'Tasmania': []
+    }
+    csp = MapColoringCSP(regions, domains, neighbors, map_coloring_constraint)
+    solution = csp.backtrack({})
+    if solution:
+        print("Solution found:")
+        for region, color in solution.items():
+            print(f"{region}: {color}")
+    else:
+        print("No solution found.")
+
+
+output
+Solution found:
+Western Australia: Red
+Northern Territory: Green
+South Australia: Blue
+Queensland: Red
+New South Wales: Green
+Victoria: Red
+Tasmania: Red
